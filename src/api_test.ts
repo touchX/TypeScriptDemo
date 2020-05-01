@@ -1,6 +1,6 @@
 /// <reference path="../types/modules/const.ts" />
 
-import { ApiCloud } from "../types/apicloud";
+import { ApiCloud  } from "../types/apicloud";
 
 declare const api:ApiCloud.IApi 
 
@@ -32,3 +32,10 @@ fs.open({path:'my.db', flags:FILE_OPEN_TYPE.READ},(ret,err)=>{
     console.warn(err.msg);
   }
 })
+
+//单文件：
+//declare const window:Window & {api:ApiCloud.IApi}
+
+window.apiready = function(){
+
+}
