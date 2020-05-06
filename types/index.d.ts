@@ -2,6 +2,9 @@ import * as api from 'api'
 import * as ble from 'ble'
 import * as db from 'db'
 import * as fs from 'apicloud-fs'
+import Vue from './vue'
+
+
 
 
 
@@ -13,6 +16,7 @@ declare namespace ApiCloud{
 }
 
 
+
 /**
  * 为 window 增添全局变量，需要重新声明一下 window 
  * 对于单文件 declare var window: Window & { api:ApiCloud.IApi, apiready:Function };
@@ -22,6 +26,8 @@ declare global{
   interface Window{
     api:ApiCloud.IApi
     apiready:()=>void
+    Vue:typeof Vue & {$context:any}
   }
+  
 }
 
