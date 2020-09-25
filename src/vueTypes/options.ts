@@ -5,40 +5,43 @@ export type PropType<T> = Prop<T> | Prop<T>[];
 //export type PropValidator<T> = PropOptions<T> | PropType<T>;
 
 /**
- *  针对于函数类型
+ *  针对于函数类型, 函数具有属性
  */
-type MyProp<T> ={ 
-  ():T
-  COUNT?:number
+type FunctionType<T> ={ 
+  ():T          //函数定义
+  COUNT?:number //函数的属性
 }
 
 /**
- * new 关键字通常用在接口中， 用于工厂模式产生带有构造函数的实例
+ * 类类型。new 关键字通常用在接口中， 用于工厂模式产生带有构造函数的实例
  */
-type MyProp2<T> = { 
-  new(...args: never[]): T & object 
+type ClassType<T> = { 
+  new(...args: never[]): T & object //类的构造函数
 
-  STATIC_PROP:string
+  STATIC_PROP:string   //类的静态属性
 }
 
 class MyCls{
   static STATIC_PROP = 'MyCls' 
   constructor(name:string){
-    
+    console.info(MyCls.STATIC_PROP)
+  }
+  public action(){
+    console.info('do something')
   }
 }
 
-let myPropVoid:MyProp<void> = ()=>{}
-let myPropNum:MyProp<number> = ()=>0
+let myPropVoid:FunctionType<void> = ()=>{}
+let myPropNum:FunctionType<number> = ()=>0
 myPropNum.COUNT = 20 
 
 
-function factory(Glass:MyProp2<MyCls>){
-  console.info(Glass.STATIC_PROP)
+function factory(Glass:ClassType<MyCls>){
   return new Glass()
 }
 
-factory(MyCls)
+let myCls = factory(MyCls)
+myCls.action()
  
 
 interface IMyCls<T>{
@@ -54,5 +57,21 @@ function create(glass:IMyCls<MyCls>){
 create(MyCls)
 
 let aa:MyCls & object = new MyCls('afef')
+
+
+type CreateFun = { new(...args: string[]): Function }
+
+class FunCls{
+  constructor(name:string){
+    console.info('return a function')
+    return function(){
+
+    }
+  }
+}
+
+function createFunClscreateFunCls(cls:CreateFun, name:string){
+  return new cls(name)
+}
 
 
